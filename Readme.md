@@ -1,8 +1,9 @@
 # Model Parallelism for fine-tuning LLMs (Minimal implementation)
 
-This is a minimal implementation for model parallelism in LLMs (large language models). You can start model parallel implementation by using this template.
+This is a minimal implementation for model parallelism in LLMs (large language models).<br>
+You can start model parallel implementation by using this template.
 
-This source code downloads the pre-trained Meta OPT model (you can choose appropriate size of models) and dataset from Hugging Face hub, and fine-tunes this model by parallelized manner with PyTorch and DeepSpeed library.
+In this source code, the pre-trained Meta OPT model (you can choose appropriate size of models) and dataset are downloaded from Hugging Face hub, and this model is then fine-tuned by parallelized manner with PyTorch and DeepSpeed library.
 
 In this source code I have just applied ZeRO for model parallelism, but see [here]( https://tsmatz.wordpress.com/2023/09/21/model-parallelism/) for parallelism overview.
 
@@ -12,13 +13,13 @@ In this source code I have just applied ZeRO for model parallelism, but see [her
 
 Create a GPU-utilized virtual machine (VM) with "Ubuntu Server 20.04 LTS" image in Microsoft Azure.
 
-In Microsoft Azure, certain VM (virtual machine) series - such as, NC and ND-series - have RDMA-capable VMs with SR-IOV and InfiniBand support. Typically, VM SKU with the letter "r" in their name (such as, "Standard_NC24rs_v3") contains the InfiniBand hardware. (However I note that older SKU such like "Standard_NC24r" doesn't support SR-IOV hardware for InfiniBand.)
+In Microsoft Azure, certain VM series - such as, NC and ND-series - have RDMA-capable VMs with SR-IOV and InfiniBand support. Typically, VM SKU with the letter "r" in their name (such as, "Standard_NC24rs_v3") contains the InfiniBand hardware. (However I note that older SKU such like "Standard_NC24r" doesn't support SR-IOV hardware for InfiniBand.)
 
 Select InfiniBand-enabled VM and install drivers, if you need  high-bandwidth inter-node connections, InfiniBand networking. (You can skip this, if you don't need InfiniBand networking.)
 
 ### Install GPU driver (CUDA)
 
-Install CUDA (GPU driver) as follows.
+Install CUDA (NVIDIA GPU driver) as follows.
 
 ```
 # compilers and development settings
@@ -35,7 +36,7 @@ source ~/.bashrc
 
 ### Install InfiniBand driver
 
-For installing and setting-up the InfiniBand driver, see "How to Setup InfiniBand on Azure{https://docs.rapids.ai/deployment/stable/guides/azure/infiniband/}
+For installing and setting-up the InfiniBand driver, see "[How to Setup InfiniBand on Azure](https://docs.rapids.ai/deployment/stable/guides/azure/infiniband/)
 " (NVIDIA document).
 
 (Skip this section if you don't need InfiniBand networking.)
@@ -50,7 +51,7 @@ sudo dpkg -i cuda-keyring_1.0-1_all.deb
 sudo apt-get update
 ```
 
-> Note : You can check whether NCCL is enabled, by running ```python3 -c "import torch;print(torch.cuda.nccl.version())"```.
+> Note : You can check whether NCCL is enabled in PyTorch, by running ```python3 -c "import torch;print(torch.cuda.nccl.version())"```.
 
 ### Install packages
 
@@ -68,7 +69,7 @@ pip3 install torch transformers datasets deepspeed
 
 
 <blockquote>
-Note : When you use ```DeepSpeedCPUAdam``` (CPU optimizer) in multi-node's training, you need to install with the following options.
+Note : When you use CPU optimizer (DeepSpeedCPUAdam) in multi-node's training, you need to install with the following options.
 
 ```
 sudo apt-get install ninja-build
@@ -79,7 +80,7 @@ DS_BUILD_CPU_ADAM=1 BUILD_UTILS=1 pip3 install deepspeed
 ### Setup for multi-node's training
 
 When you run multi-node's training in DeepSpeed, all nodes (participants, remote servers) should be accessible with passwordless SSH.<br>
-To setup this environment, please run the following commands in the master node.
+To setup this environment, please run the following commands in the master node. (Change the following ```{USER_NAME}``` and ```{REMOTE_HOST}``` appropriately.)
 
 ```
 # create public / private key
@@ -87,7 +88,7 @@ ssh-keygen -t rsa -b 4096
 # upload public key to remote host
 # (repeat for all remote servers)
 ssh-copy-id {USER_NAME}@{REMOTE_HOST}
-# add identity for logging-in without key authentication
+# add identity for logging-in without key auth
 eval "$(ssh-agent)"
 ssh-add
 # deepspeed uses pdsh to launch multi-node training
