@@ -11,8 +11,8 @@ from datasets import load_dataset
 import math
 
 # To-Do : Select model size
-model_name = "facebook/opt-6.7b"
-# model_name = "facebook/opt-1.3b"
+# model_name = "facebook/opt-6.7b"
+model_name = "facebook/opt-1.3b"
 # model_name = "facebook/opt-350m"
 # model_name = "facebook/opt-125m"
 
