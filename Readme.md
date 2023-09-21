@@ -39,7 +39,7 @@ source ~/.bashrc
 For installing and setting-up the InfiniBand driver, see "[How to Setup InfiniBand on Azure](https://docs.rapids.ai/deployment/stable/guides/azure/infiniband/)
 " (NVIDIA document).
 
-(Skip this section if you don't need InfiniBand networking.)
+Skip this section if you don't need InfiniBand networking.
 
 ### Install NCCL
 
