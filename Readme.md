@@ -131,5 +131,5 @@ deepspeed --hostfile=job/hostfile zero-optimization.py --deepspeed
 <blockquote>
 To see GPU usage, run nvidia-smi command.
 
-![nvidia-smi execution](https://tsmatz.files.wordpress.com/2023/09/20230925_gpu_usage.jpg?resize=438%2C438)
+![nvidia-smi execution](https://tsmatz.files.wordpress.com/2023/09/20230925_gpu_usage.jpg)
 </blockquote>
