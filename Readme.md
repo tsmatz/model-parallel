@@ -1,4 +1,4 @@
-# Model Parallelism for fine-tuning LLMs (Minimal implementation)
+# Model Parallel Minimal Implementation (Fine-tuning LLMs with ZeRO)
 
 This is a minimal implementation for model parallelism in LLMs (large language models).<br>
 You can start model parallel implementation by using this template.
