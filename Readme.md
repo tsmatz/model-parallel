@@ -89,6 +89,7 @@ ssh-keygen -t rsa -b 4096
 # (repeat for all remote servers)
 ssh-copy-id {USER_NAME}@{REMOTE_HOST}
 # add identity for logging-in without key auth
+# (this is also needed once you have logged-in again)
 eval "$(ssh-agent)"
 ssh-add
 # deepspeed uses pdsh to launch multi-node training
