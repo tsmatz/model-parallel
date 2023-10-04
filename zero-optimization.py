@@ -96,22 +96,16 @@ dataset = dataset.filter(lambda d: len(d["prompt"] + d["chosen"]) < model_config
 
 # Convert dataset
 def _align_dataset(data):
-    prompt_tokens = tokenizer(
-        data["prompt"],
-        max_length=max_seq_len,
-        padding="max_length",
-        truncation=True,
-        return_tensors="pt")
-    label_tokens = tokenizer(
+    all_tokens = tokenizer(
         [data["prompt"][i]+data["chosen"][i] for i in range(len(data["prompt"]))],
         max_length=max_seq_len,
         padding="max_length",
         truncation=True,
         return_tensors="pt")
     return {
-        "input_ids": prompt_tokens["input_ids"],
-        "attention_mask": prompt_tokens["attention_mask"],
-        "labels": label_tokens["input_ids"],
+        "input_ids": all_tokens["input_ids"],
+        "attention_mask": all_tokens["attention_mask"],
+        "labels": all_tokens["input_ids"],
     }
 dataset = dataset.map(
     _align_dataset,
