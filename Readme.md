@@ -5,7 +5,9 @@ You can start model parallel implementation by using this template.
 
 In this source code, the pre-trained Meta OPT model (you can choose appropriate size of models) and dataset are downloaded from Hugging Face hub, and this model is then fine-tuned by parallelized manner with PyTorch and DeepSpeed library.
 
-In this source code I have just applied ZeRO for model parallelism, but see [here]( https://tsmatz.wordpress.com/2023/09/21/model-parallelism/) for parallelism overview.
+In this source code, I have just applied ZeRO (Zero Redundancy Optimizer) for model parallel implementation, but see [here]( https://tsmatz.wordpress.com/2023/09/21/model-parallelism/) for model parallelism overview.
+
+> Note : See [here](https://github.com/tsmatz/azureml-examples/blob/master/azureml_huggingface_distributed_with_deepspeed/azureml_huggingface_distributed_with_deepspeed.ipynb) for model parallel distribution example in Azure Machine Learning.
 
 ## 1. Set-up and install
 
