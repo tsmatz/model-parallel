@@ -6,7 +6,7 @@ Please change the following settings depending on your capacity (the size of GPU
 import torch
 from torch.utils.data import DataLoader, RandomSampler
 from torch.optim.lr_scheduler import LambdaLR
-from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer, default_data_collator
+from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer, DataCollatorForLanguageModeling
 from datasets import load_dataset
 import math
 
@@ -72,11 +72,14 @@ dataset = dataset.map(
 # Here we use only train dataset
 dataset = dataset["train"]
 
+# Label is shifted by one element in DataCollatorForLanguageModeling
+data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+
 # Create PyTorch dataloader
 sampler = RandomSampler(dataset)
 dataloader = DataLoader(
     dataset,
-    collate_fn=default_data_collator,
+    collate_fn=data_collator,
     sampler=sampler,
     batch_size=batch_size)
 

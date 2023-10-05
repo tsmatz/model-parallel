@@ -6,7 +6,7 @@ Please change the following settings depending on your capacity (the size of GPU
 import torch
 from torch.utils.data import DataLoader, DistributedSampler
 from torch.optim.lr_scheduler import LambdaLR
-from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer, default_data_collator
+from transformers import AutoModelForCausalLM, AutoConfig, AutoTokenizer, DataCollatorForLanguageModeling
 from datasets import load_dataset
 import argparse
 import math
@@ -145,6 +145,9 @@ def _get_cosine_schedule(
     return max(0.0, 0.5 * (1.0 + math.cos(math.pi * progress)))
 scheduler = LambdaLR(optimizer, lr_lambda=_get_cosine_schedule)
 
+# Label is shifted by one element in DataCollatorForLanguageModeling
+data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+
 # Initialize components (except for scheduler)
 model_engine, optimizer, dataloader, _ = deepspeed.initialize(
     model=model,
@@ -153,7 +156,7 @@ model_engine, optimizer, dataloader, _ = deepspeed.initialize(
     args=args,
     # lr_scheduler=scheduler,  # see below note
     training_data=dataset,
-    collate_fn=default_data_collator,
+    collate_fn=data_collator,
     dist_init_required=True
 )
 
