@@ -116,5 +116,5 @@ for epoch in range(num_epochs):
                 optimizer.step()
                 optimizer.zero_grad()
                 scheduler.step()
-            print(f"Epoch {epoch+1} {math.ceil((i + 1) / gradient_accumulation_steps)}/{num_update_steps} - loss: {loss :2.4f}", end="\r")
+            print(f"Epoch {epoch+1} {math.ceil((i + 1) / batch_size / gradient_accumulation_steps)}/{num_update_steps} - loss: {loss :2.4f}", end="\r")
     print("")

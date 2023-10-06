@@ -132,7 +132,6 @@ optimizer = FusedAdam(
 
 # Build cosine scheduler manually
 # (You can also use DeepSpeed built-in scheduler in configuration.)
-#####num_update_steps = math.ceil(len(dataloader) / train_micro_batch_size_per_gpu / gradient_accumulation_steps)
 num_update_steps = math.ceil(len(dataset["input_ids"]) / train_micro_batch_size_per_gpu / gradient_accumulation_steps)
 def _get_cosine_schedule(
     current_step: int,
@@ -175,5 +174,5 @@ for epoch in range(num_epochs):
             # when it's supposed to execute at every training step.
             if model_engine.is_gradient_accumulation_boundary():
                 scheduler.step()
-            print(f"Epoch {epoch+1} {math.ceil((i + 1) / gradient_accumulation_steps)}/{num_update_steps} - loss: {loss :2.4f}", end="\r")
+            print(f"Epoch {epoch+1} {math.ceil((i + 1) / train_micro_batch_size_per_gpu / gradient_accumulation_steps)}/{num_update_steps} - loss: {loss :2.4f}", end="\r")
     print("")
