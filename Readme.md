@@ -7,7 +7,7 @@ In this source code, the pre-trained Meta OPT model (you can choose appropriate 
 
 In this source code, I have just applied ZeRO (Zero Redundancy Optimizer) for model parallel implementation, but see [here]( https://tsmatz.wordpress.com/2023/09/21/model-parallelism/) for model parallelism overview.
 
-> Note : Here I run full-parameter fine-tuning, but applying LoRA significantly reduces resources for fine-tuning. See [here](https://github.com/tsmatz/finetune_llm_with_lora) for fine-tuning OPT model with LoRA.
+> Note : Here I run full-parameter fine-tuning, but you can significantly reduce memory consumption by applying LoRA in fine-tuning. See [here](https://github.com/tsmatz/finetune_llm_with_lora) for fine-tuning OPT model with LoRA.
 
 > Note : See [here](https://github.com/tsmatz/azureml-examples/blob/master/azureml_huggingface_distributed_with_deepspeed/azureml_huggingface_distributed_with_deepspeed.ipynb) for model parallel distribution example in Azure Machine Learning.
 
